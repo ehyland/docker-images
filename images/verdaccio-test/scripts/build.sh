@@ -9,10 +9,17 @@ VERDACCIO_VERSION=$(
     | jq -r '.version'
 )
 
-TAG="ehyland/verdaccio-test:${VERDACCIO_VERSION}"
+NAME="ehyland/verdaccio-test"
+TAG="${NAME}:${VERDACCIO_VERSION}"
+LATEST_TAG="${NAME}:latest"
+
+docker pull "$TAG" || true
+docker pull "$LATEST_TAG" || true
 
 docker build \
   -t "$TAG" \
+  --cache-from "$TAG" \
+  --cache-from "$LATEST_TAG" \
   --build-arg VERDACCIO_VERSION="$VERDACCIO_VERSION" \
   .
 
@@ -25,6 +32,8 @@ if [[ "$1" == "run" ]]; then
 fi
 
 if [[ "$1" == "push" ]]; then 
-  docker push $TAG
+  docker tag "$TAG" "$LATEST_TAG"
+  docker push "$TAG"
+  docker push "$LATEST_TAG"
 fi
 
