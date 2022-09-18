@@ -36,7 +36,7 @@ if [[ "$1" == "push" ]]; then
   docker push "$TAG"
   docker push "$LATEST_TAG"
 
-  echo "### Published :rocket: `$TAG`" >> $GITHUB_STEP_SUMMARY
-  echo "### Published :rocket: `$LATEST_TAG`" >> $GITHUB_STEP_SUMMARY
+  echo "### Published :rocket: ${TAG}" >> $GITHUB_STEP_SUMMARY
+  echo "### Published :rocket: ${LATEST_TAG}" >> $GITHUB_STEP_SUMMARY
 fi
 
