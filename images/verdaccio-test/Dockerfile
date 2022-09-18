@@ -3,7 +3,6 @@ FROM node:16.17.0-alpine
 RUN apk add --no-cache \
   bash \
   curl \
-  jq \
   yq \
   shadow
 

@@ -7,7 +7,7 @@ cd "$(dirname $0)/.."
 SUB_COMMAND=${1:-}
 VERDACCIO_VERSION=$(
   curl -fsSL https://registry.npmjs.org/verdaccio/latest \
-    | jq -r '.version'
+    | yq -r '.version'
 )
 
 NAME="ehyland/verdaccio-test"
