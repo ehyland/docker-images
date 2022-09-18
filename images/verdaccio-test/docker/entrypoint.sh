@@ -2,6 +2,8 @@
 set -e
 
 DB_FILE="/verdaccio/storage/data/.verdaccio-db.json"
+CONFIG_FILE="/verdaccio/config.yml"
+VERDACCIO_PORT=${VERDACCIO_PORT:-"4873"}
 
 if [[ -n "$VERDACCIO_UID" ]] && [[ "$VERDACCIO_UID" != `id -u node` ]]; then
   echo "Changing user id..."
@@ -16,6 +18,9 @@ fi
 echo "Setting not so secret secret..."
 UPDATED=$(cat "$DB_FILE" | jq '.secret = "not-so-secret"')
 echo "$UPDATED" > "$DB_FILE"
+
+echo "Setting correct listen config..."
+yq -i '.listen = ["0.0.0.0:'$VERDACCIO_PORT'"]' "$CONFIG_FILE"
 
 echo "Fixing file permissions..."
 chown -R node:node /verdaccio

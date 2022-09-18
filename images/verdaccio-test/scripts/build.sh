@@ -4,6 +4,7 @@ set -euo pipefail
 
 cd "$(dirname $0)/.."
 
+SUB_COMMAND=${1:-}
 VERDACCIO_VERSION=$(
   curl -fsSL https://registry.npmjs.org/verdaccio/latest \
     | jq -r '.version'
@@ -23,19 +24,19 @@ docker build \
   --build-arg VERDACCIO_VERSION="$VERDACCIO_VERSION" \
   .
 
-if [[ "$1" == "run" ]]; then 
+if [[ "$SUB_COMMAND" == "run" ]]; then 
   docker run --rm -it \
-    -p 4873:4873 \
+    -p 5000:5000 \
     -v $(pwd)/data:/verdaccio/storage/data \
     -e VERDACCIO_UID=`id -u` \
+    -e VERDACCIO_PORT=5000 \
     "$TAG"
 fi
 
-if [[ "$1" == "push" ]]; then 
+if [[ "$SUB_COMMAND" == "push" ]]; then 
   docker tag "$TAG" "$LATEST_TAG"
   docker push "$TAG"
   docker push "$LATEST_TAG"
-
 
   CODE='`'
   echo ":rocket: ${CODE}${TAG}${CODE}" >> $GITHUB_STEP_SUMMARY
