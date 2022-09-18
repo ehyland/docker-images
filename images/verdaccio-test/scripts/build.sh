@@ -14,6 +14,10 @@ NAME="ehyland/verdaccio-test"
 TAG="${NAME}:${VERDACCIO_VERSION}"
 LATEST_TAG="${NAME}:latest"
 
+echo "NAME=${NAME}" > ".build-vars"
+echo "TAG=${TAG}" >> ".build-vars"
+echo "LATEST_TAG=${LATEST_TAG}" >> ".build-vars"
+
 docker pull "$TAG" || true
 docker pull "$LATEST_TAG" || true
 
@@ -32,14 +36,3 @@ if [[ "$SUB_COMMAND" == "run" ]]; then
     -e VERDACCIO_PORT=5000 \
     "$TAG"
 fi
-
-if [[ "$SUB_COMMAND" == "push" ]]; then 
-  docker tag "$TAG" "$LATEST_TAG"
-  docker push "$TAG"
-  docker push "$LATEST_TAG"
-
-  CODE='`'
-  echo ":rocket: ${CODE}${TAG}${CODE}" >> $GITHUB_STEP_SUMMARY
-  echo ":rocket: ${CODE}${LATEST_TAG}${CODE}" >> $GITHUB_STEP_SUMMARY
-fi
-

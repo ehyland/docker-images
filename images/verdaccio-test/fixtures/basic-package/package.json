@@ -1,7 +1,0 @@
-{
-  "name": "basic-package",
-  "version": "0.0.1",
-  "publishConfig": {
-    "registry": "http://localhost:4873"
-  }
-}

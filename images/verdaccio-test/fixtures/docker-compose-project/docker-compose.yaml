@@ -1,0 +1,11 @@
+services:
+  # Local NPM registry
+  registry:
+    image: ${TAG}
+    environment:
+      - VERDACCIO_UID
+      - VERDACCIO_PORT
+    volumes:
+      - ./data:/verdaccio/storage/data
+    ports:
+      - ${VERDACCIO_PORT}:${VERDACCIO_PORT}
