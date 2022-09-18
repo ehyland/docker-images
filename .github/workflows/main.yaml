@@ -3,7 +3,7 @@ on: [push]
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
-    if: ${{ github.ref_name == main }}
+    if: ${{ github.ref_name == 'main' }}
     steps:
       - uses: actions/checkout@v3
 
