@@ -15,6 +15,6 @@ docker build . \
 
 push-if-ci "$IMAGE"
 
-if [[ "$1" == "run" ]]; then
+if [[ "${1:-}" == "run" ]]; then
   docker run --rm -it "$IMAGE" bash
 fi
