@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -euxo pipefail
+
+cd "$(dirname $0)/.."
+
+RELATIVE_BUILD_PATH="$1"
+export DOCKER_REGISTRY="docker.io"
+export PATH="$PWD/scripts/bin:$PATH"
+
+"$RELATIVE_BUILD_PATH/build"

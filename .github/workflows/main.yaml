@@ -9,4 +9,6 @@ jobs:
 
       - run: docker login -u ehyland -p ${{ secrets.DOCKER_HUB_TOKEN }}
 
+      - run: scripts/build images/node-auto
+
       - run: images/verdaccio-test/scripts/ci.sh

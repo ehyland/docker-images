@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+IMAGE="$1"
+
+if [[ "$CI" == "true" ]]; then
+  echo "publishing $IMAGE"
+  
+  docker push "$IMAGE"
+else
+  echo "Skipping push as not in CI"
+fi
+
+echo "🚀  $IMAGE"

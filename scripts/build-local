@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+cd "$(dirname $0)/.."
+
+
+export CI="false"
+export DOCKER_REGISTRY="local"
+export PATH="$PWD/scripts/bin:$PATH"
+
+IMAGE_BUILD_DIR="$1"
+shift
+
+"$IMAGE_BUILD_DIR/build" $@

@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+cd "$(dirname $0)"
+
+DEBIAN_VERSION="12"
+TAG="debian-${DEBIAN_VERSION}"
+IMAGE_NAME="ehyland/node-auto"
+IMAGE="${DOCKER_REGISTRY}/${IMAGE_NAME}:${TAG}"
+
+docker build . \
+  --tag "$IMAGE" \
+  --build-arg DEBIAN_VERSION="$DEBIAN_VERSION"
+
+push-if-ci "$IMAGE"
+
+if [[ "$1" == "run" ]]; then
+  docker run --rm -it "$IMAGE" bash
+fi
