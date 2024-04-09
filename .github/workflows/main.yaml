@@ -11,4 +11,6 @@ jobs:
 
       - run: scripts/build images/node-auto
 
+      - run: scripts/build images/caddy-with-cloudflare-dns
+
       - run: images/verdaccio-test/scripts/ci.sh

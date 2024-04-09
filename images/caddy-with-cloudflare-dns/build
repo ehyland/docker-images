@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+cd "$(dirname $0)"
+
+CADDY_VERSION="2.7.6"
+
+TAG="${CADDY_VERSION}-with-cloudflare-dns"
+IMAGE_NAME="ehyland/caddy"
+IMAGE="${DOCKER_REGISTRY}/${IMAGE_NAME}:${TAG}"
+
+docker build . \
+  -t "$IMAGE" \
+  --build-arg CADDY_VERSION="$CADDY_VERSION"
+
+push-if-ci "$IMAGE"
