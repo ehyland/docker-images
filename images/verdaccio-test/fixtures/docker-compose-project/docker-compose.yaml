@@ -1,7 +1,7 @@
 services:
   # Local NPM registry
   registry:
-    image: ${TAG}
+    image: ${IMAGE}
     environment:
       - VERDACCIO_UID
       - VERDACCIO_PORT

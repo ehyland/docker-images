@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+cd "$(dirname $0)"
+
+VERDACCIO_VERSION=$(
+  curl -fsSL https://registry.npmjs.org/verdaccio/latest \
+    | yq -r '.version'
+)
+
+TAG="${VERDACCIO_VERSION}"
+IMAGE_NAME="ehyland/verdaccio-test"
+IMAGE="${DOCKER_REGISTRY}/${IMAGE_NAME}:${TAG}"
+
+docker build . \
+  --tag "$IMAGE" \
+  --build-arg VERDACCIO_VERSION="$VERDACCIO_VERSION" 
+
+IMAGE="$IMAGE" ./scripts/test.sh
+
+push-if-ci "$IMAGE"
+
+if [[ "${1:-}" == "run" ]]; then
+  docker run --rm -it "$IMAGE" bash
+fi

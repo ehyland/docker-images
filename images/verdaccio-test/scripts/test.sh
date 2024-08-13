@@ -4,16 +4,15 @@ set -euo pipefail
 
 cd "$(dirname $0)/.."
 
-cat .build-vars
-source .build-vars
-
 TEST_WORKSPACE="${PWD}/test-workspace"
 TEST_FIXTURE="${PWD}/fixtures/docker-compose-project"
 
 # cleanup
 function clean_up {
+  exit_code=$?
   cd "$TEST_WORKSPACE"
-  docker-compose down
+  docker compose down
+  exit $exit_code
 }
 trap clean_up EXIT
 
@@ -22,14 +21,13 @@ rm -rf "$TEST_WORKSPACE" || true
 cp -r "$TEST_FIXTURE" "$TEST_WORKSPACE"
 cd "$TEST_WORKSPACE"
 
-# more vars
-export TAG="${TAG}"
+export IMAGE="${IMAGE}"
 export VERDACCIO_UID=`id -u`
 export VERDACCIO_PORT=5000
 
-docker-compose run registry auth > .npmrc
+docker compose run registry auth > .npmrc
 
-docker-compose up -d
+docker compose up -d
 
 cd ./basic-package
 
