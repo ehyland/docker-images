@@ -4,13 +4,17 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     if: ${{ github.ref_name == 'main' }}
+    strategy:
+      matrix:
+        imagePath:
+          [
+            images/node-auto,
+            images/caddy-with-cloudflare-dns,
+            images/verdaccio-test,
+          ]
     steps:
       - uses: actions/checkout@v3
 
       - run: docker login -u ehyland -p ${{ secrets.DOCKER_HUB_TOKEN }}
 
-      - run: scripts/build images/node-auto
-
-      - run: scripts/build images/caddy-with-cloudflare-dns
-
-      - run: images/verdaccio-test/scripts/ci.sh
+      - run: scripts/build ${{ matrix.imagePath }}
