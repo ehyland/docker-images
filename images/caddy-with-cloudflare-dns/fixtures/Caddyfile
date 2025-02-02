@@ -1,0 +1,8 @@
+{
+	auto_https disable_redirects
+}
+
+# Local-only http
+:8080 {
+	respond "Hello from test fixture!"
+}
