@@ -4,7 +4,12 @@ set -euo pipefail
 
 cd "$(dirname $0)"
 
-CADDY_VERSION="2.7.6"
+CADDY_VERSION=$(curl -fsSL https://api.github.com/repos/caddyserver/caddy/releases/latest | yq '.tag_name' | sed 's/^v//')
+
+if [[ ! "$CADDY_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then 
+  echo "Version does not match expected pattern \"$CADDY_VERSION\""
+  exit 1
+fi
 
 TAG="${CADDY_VERSION}-with-cloudflare-dns"
 IMAGE_NAME="ehyland/caddy"
