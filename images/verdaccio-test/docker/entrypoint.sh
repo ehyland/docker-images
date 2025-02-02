@@ -28,6 +28,20 @@ yq -o=json -i '.secret = "not-so-secret"' "$DB_FILE"
 echo "Setting correct listen config..."
 yq -i '.listen = ["0.0.0.0:'$VERDACCIO_PORT'"]' "$CONFIG_FILE"
 
+if [[ -n "$VERDACCIO_NO_NPM_PROXY_PACKAGE" ]]; then
+  echo "Updating config to disable proxy for $VERDACCIO_NO_NPM_PROXY_PACKAGE..."
+
+  yq -i \
+    '.packages = {
+      "'$VERDACCIO_NO_NPM_PROXY_PACKAGE'": {
+        "access": "$all",
+        "publish": "$all",
+        "unpublish": "$authenticated"
+      }
+    } + .packages' \
+    "$CONFIG_FILE"
+fi
+
 echo "Fixing file permissions..."
 chown -R node:node /verdaccio
 
