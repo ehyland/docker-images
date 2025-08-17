@@ -13,3 +13,7 @@ else
 fi
 
 echo "🚀  $IMAGE"
+
+if [[ -e $(which print-docker-build-success-message) ]]; then
+  print-docker-build-success-message "$IMAGE"
+fi

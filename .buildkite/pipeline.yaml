@@ -1,0 +1,9 @@
+steps:
+  - label: Build {{matrix}}
+    command: |
+      ci-docker-hub-login
+      scripts/build {{matrix}}
+    matrix:
+      - images/node-auto
+      - images/caddy-with-cloudflare-dns
+      - images/verdaccio-test
