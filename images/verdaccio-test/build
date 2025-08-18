@@ -11,7 +11,7 @@ VERDACCIO_VERSION=$(
 
 TAG="${VERDACCIO_VERSION}"
 IMAGE_NAME="ehyland/verdaccio-test"
-IMAGE="${DOCKER_REGISTRY}/${IMAGE_NAME}:${TAG}"
+IMAGE="${DOCKER_REGISTRY}${IMAGE_NAME}:${TAG}"
 
 docker build . \
   --tag "$IMAGE" \

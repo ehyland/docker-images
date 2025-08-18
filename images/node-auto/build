@@ -7,7 +7,7 @@ cd "$(dirname $0)"
 DEBIAN_VERSION="13"
 TAG="debian-${DEBIAN_VERSION}"
 IMAGE_NAME="ehyland/node-auto"
-IMAGE="${DOCKER_REGISTRY}/${IMAGE_NAME}:${TAG}"
+IMAGE="${DOCKER_REGISTRY}${IMAGE_NAME}:${TAG}"
 
 docker build . \
   --tag "$IMAGE" \
