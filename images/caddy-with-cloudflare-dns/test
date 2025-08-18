@@ -20,15 +20,18 @@ function clean_up {
 }
 trap clean_up EXIT
 
+CONTAINER_IP=$(
+  docker container inspect "$CONTAINER_ID" | yq '.[0].NetworkSettings.Ports["8080/tcp"][0].HostIp'
+)
 CONTAINER_PORT=$(
   docker container inspect "$CONTAINER_ID" | yq '.[0].NetworkSettings.Ports["8080/tcp"][0].HostPort'
 )
 
 # give caddy time to start listening
-sleep 5
+sleep 1
 
 RESPONSE=$(
-  curl -fsSL http://127.0.0.1:$CONTAINER_PORT
+  curl -fsSL http://${CONTAINER_IP}:$CONTAINER_PORT
 )
 
 if [[ $RESPONSE == "Hello from test fixture!" ]]; then
