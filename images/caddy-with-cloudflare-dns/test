@@ -25,7 +25,7 @@ CONTAINER_PORT=$(
 )
 
 # give caddy time to start listening
-sleep 1
+sleep 5
 
 RESPONSE=$(
   curl -fsSL http://localhost:$CONTAINER_PORT
