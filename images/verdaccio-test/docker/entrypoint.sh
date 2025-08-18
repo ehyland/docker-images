@@ -45,4 +45,5 @@ fi
 echo "Fixing file permissions..."
 chown -R node:node /verdaccio
 
+echo "Starting registry..."
 exec su - node -c "$@"
