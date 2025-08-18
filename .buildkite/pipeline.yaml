@@ -2,7 +2,6 @@
 
 steps:
   - label: Build {{matrix}}
-    agents: [queue=new]
     command: |
       ci-docker-hub-login
       scripts/build {{matrix}}
