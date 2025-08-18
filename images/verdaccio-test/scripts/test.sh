@@ -25,13 +25,14 @@ export IMAGE="${IMAGE}"
 export VERDACCIO_UID=`id -u`
 export VERDACCIO_PORT=5000
 
-docker compose run registry auth > .npmrc
-
 docker compose up -d
+REGISTRY_HOST=$(docker compose port registry "$VERDACCIO_PORT")
+docker compose exec registry auth > .npmrc
+sed -E -i "s|//[^/]+/|//${REGISTRY_HOST:-}/|g" .npmrc
 
 cd ./basic-package
 
-npm --userconfig "${TEST_WORKSPACE}/.npmrc" --registry "http://localhost:5000" publish
+npm --userconfig "${TEST_WORKSPACE}/.npmrc" --registry "http://${REGISTRY_HOST}" publish
 
 cd "$TEST_WORKSPACE"
 

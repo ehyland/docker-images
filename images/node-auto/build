@@ -4,7 +4,7 @@ set -euo pipefail
 
 cd "$(dirname $0)"
 
-DEBIAN_VERSION="12"
+DEBIAN_VERSION="13"
 TAG="debian-${DEBIAN_VERSION}"
 IMAGE_NAME="ehyland/node-auto"
 IMAGE="${DOCKER_REGISTRY}/${IMAGE_NAME}:${TAG}"
