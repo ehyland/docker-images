@@ -27,6 +27,7 @@ export VERDACCIO_PORT=5000
 
 docker compose up -d
 REGISTRY_HOST=$(docker compose port registry "$VERDACCIO_PORT")
+docker compose logs registry
 docker compose exec registry auth > .npmrc
 sed -E -i "s|//[^/]+/|//${REGISTRY_HOST:-}/|g" .npmrc
 
