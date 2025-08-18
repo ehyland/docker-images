@@ -12,7 +12,15 @@ if [[ "${1:-}" == "auth" ]]; then
   exit 0
 fi
 
-if [[ -n "$VERDACCIO_UID" ]] && [[ "$VERDACCIO_UID" != `id -u node` ]]; then
+if [[ "${1:-}" == "npmrc" ]]; then
+  echo ""
+  echo "registry=http://${2}/"
+  echo '//'${2}'/:_authToken="T/ZceTDgZFqHEFyzQ5DE0A=="'
+  echo ""
+  exit 0
+fi
+
+if [[ -n "$VERDACCIO_UID" ]] && [[ "$VERDACCIO_UID" != `id -u node` ]] && [[ "$VERDACCIO_UID" != 0 ]]; then
   echo "Changing user id..."
   usermod -u "$VERDACCIO_UID" node
 fi
@@ -45,4 +53,5 @@ fi
 echo "Fixing file permissions..."
 chown -R node:node /verdaccio
 
+echo "Starting registry..."
 exec su - node -c "$@"

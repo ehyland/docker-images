@@ -13,7 +13,7 @@ fi
 
 TAG="${CADDY_VERSION}-with-cloudflare-dns"
 IMAGE_NAME="ehyland/caddy"
-export IMAGE="${DOCKER_REGISTRY}/${IMAGE_NAME}:${TAG}"
+export IMAGE="${DOCKER_REGISTRY}${IMAGE_NAME}:${TAG}"
 
 docker build . \
   -t "$IMAGE" \

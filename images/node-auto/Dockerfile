@@ -1,4 +1,4 @@
-ARG DEBIAN_VERSION
+ARG DEBIAN_VERSION=0
 FROM debian:${DEBIAN_VERSION}-slim
 
 # runtime deps

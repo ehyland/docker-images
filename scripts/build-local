@@ -6,7 +6,7 @@ cd "$(dirname $0)/.."
 
 
 export CI="false"
-export DOCKER_REGISTRY="local"
+export DOCKER_REGISTRY="local/"
 export PATH="$PWD/scripts/bin:$PATH"
 
 IMAGE_BUILD_DIR="$1"

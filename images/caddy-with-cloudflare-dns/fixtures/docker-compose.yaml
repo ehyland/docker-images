@@ -1,0 +1,13 @@
+services:
+  test-app:
+    image: ${IMAGE}
+    command: caddy run --watch --config /fixtures/Caddyfile
+    volumes:
+      - ./:/fixtures
+    ports:
+      - "8080"
+  test-runner:
+    image: oven/bun:alpine
+    command: bun test /fixtures/index.ts
+    volumes:
+      - ./:/fixtures

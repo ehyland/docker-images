@@ -1,39 +1,9 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -euxo pipefail
 
 cd "$(dirname $0)"
 
-CONTAINER_ID=$(
-  docker run --rm -d \
-    -v "${PWD}/fixtures:/fixtures" \
-    -p 8080 \
-    $IMAGE \
-    caddy run --watch --config /fixtures/Caddyfile
-)
+cd fixtures
 
-function clean_up {
-  exit_code=$?
-  docker rm -f $CONTAINER_ID
-  exit $exit_code
-}
-trap clean_up EXIT
-
-CONTAINER_PORT=$(
-  docker container inspect "$CONTAINER_ID" | yq '.[0].NetworkSettings.Ports["8080/tcp"][0].HostPort'
-)
-
-# give caddy time to start listening
-sleep 1
-
-RESPONSE=$(
-  curl -fsSL http://localhost:$CONTAINER_PORT
-)
-
-if [[ $RESPONSE == "Hello from test fixture!" ]]; then
-  echo "✅  Test passed"
-  exit 0
-else
-  echo "❌  Test failed"
-  exit 1
-fi
+docker compose up --exit-code-from test-runner
