@@ -28,7 +28,7 @@ CONTAINER_PORT=$(
 sleep 5
 
 RESPONSE=$(
-  curl -fsSL http://localhost:$CONTAINER_PORT
+  curl -fsSL http://127.0.0.1:$CONTAINER_PORT
 )
 
 if [[ $RESPONSE == "Hello from test fixture!" ]]; then
