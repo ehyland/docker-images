@@ -9,7 +9,7 @@ TEST_WORKSPACE="${PWD}/test-workspace"
 
 export COMPOSE_PROJECT_NAME="${BUILDKITE_JOB_ID:-}"
 export IMAGE="${IMAGE}"
-export VERDACCIO_UID=`id -u`
+export VERDACCIO_UID=1000
 export VERDACCIO_PORT=5000
 
 # setup dirs
