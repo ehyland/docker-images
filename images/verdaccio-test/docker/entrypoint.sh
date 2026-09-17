@@ -27,11 +27,11 @@ fi
 
 if [[ ! -e "$DB_FILE" ]]; then
   echo "Creating DB file..."
-  echo '{"list": [],"secret": "not-so-secret"}' > "$DB_FILE"
+  echo '{"list": [],"secret": "not-so-secret-------------------"}' > "$DB_FILE"
 fi
 
 echo "Setting not so secret secret..."
-yq -o=json -i '.secret = "not-so-secret"' "$DB_FILE"
+yq -o=json -i '.secret = "not-so-secret-------------------"' "$DB_FILE"
 
 echo "Setting correct listen config..."
 yq -i '.listen = ["0.0.0.0:'$VERDACCIO_PORT'"]' "$CONFIG_FILE"

@@ -22,5 +22,7 @@ docker compose run --rm registry npmrc "registry:${VERDACCIO_PORT}" > basic-pack
 
 docker compose up --exit-code-from test-runner
 
+echo "✅  verdaccio test passed"
+
 
 
