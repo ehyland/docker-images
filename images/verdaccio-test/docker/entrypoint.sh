@@ -5,9 +5,14 @@ DB_FILE="/verdaccio/storage/data/.verdaccio-db.json"
 CONFIG_FILE="/verdaccio/config.yml"
 VERDACCIO_PORT=${VERDACCIO_PORT:-"4873"}
 
+# The static secret used by the registry. Regenerate STATIC_AUTH_TOKEN if this
+# changes (it is a non-expiring JWT signed with this secret).
+SECRET="not-so-secret-------------------"
+STATIC_AUTH_TOKEN="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzdCIsImdyb3VwcyI6WyIkYWxsIiwiJGF1dGgiLCIkZGVwcmVjYXRlZF9hbGwiLCIkZGVwcmVjYXRlZF9hdXRoIiwiYWxsIl0sInJlYWxfZ3JvdXBzIjpbXX0.2ND44JBKkR03HO8gKG8mIoSaIx2ouBd5g83uKzsp4ZU"
+
 if [[ "${1:-}" == "auth" ]]; then
   echo ""
-  echo '//localhost:'$VERDACCIO_PORT'/:_authToken="T/ZceTDgZFqHEFyzQ5DE0A=="'
+  echo '//localhost:'$VERDACCIO_PORT'/:_authToken="'$STATIC_AUTH_TOKEN'"'
   echo ""
   exit 0
 fi
@@ -15,7 +20,7 @@ fi
 if [[ "${1:-}" == "npmrc" ]]; then
   echo ""
   echo "registry=http://${2}/"
-  echo '//'${2}'/:_authToken="T/ZceTDgZFqHEFyzQ5DE0A=="'
+  echo '//'${2}'/:_authToken="'$STATIC_AUTH_TOKEN'"'
   echo ""
   exit 0
 fi
@@ -27,11 +32,11 @@ fi
 
 if [[ ! -e "$DB_FILE" ]]; then
   echo "Creating DB file..."
-  echo '{"list": [],"secret": "not-so-secret-------------------"}' > "$DB_FILE"
+  echo '{"list": [],"secret": "'$SECRET'"}' > "$DB_FILE"
 fi
 
 echo "Setting not so secret secret..."
-yq -o=json -i '.secret = "not-so-secret-------------------"' "$DB_FILE"
+yq -o=json -i '.secret = "'$SECRET'"' "$DB_FILE"
 
 echo "Setting correct listen config..."
 yq -i '.listen = ["0.0.0.0:'$VERDACCIO_PORT'"]' "$CONFIG_FILE"

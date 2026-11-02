@@ -11,6 +11,16 @@ auth:
   htpasswd:
     file: /verdaccio/storage/htpasswd
 
+# Use JWT tokens so this test image can use a static auth token. The token
+# printed by the `auth` and `npmrc` commands in docker/entrypoint.sh is
+# signed with the static secret defined there.
+security:
+  api:
+    jwt:
+      sign:
+        expiresIn: 10y
+      verify: {}
+
 uplinks:
   npmjs:
     url: https://registry.npmjs.org/
