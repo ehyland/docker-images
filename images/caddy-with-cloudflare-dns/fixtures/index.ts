@@ -9,7 +9,7 @@ test(
     await Bun.sleep(interval); // wait for caddy to start
     const response = await fetch("http://test-app:8080");
     const body = await response.text();
-    expect(body).toBe("Hello from test fixture!");
+    expect(body).toBe("Hello from replace-response!");
   },
   { retry: timeout / interval }
 );

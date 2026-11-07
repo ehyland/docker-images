@@ -2,7 +2,8 @@ ARG CADDY_VERSION="0.0.0"
 FROM caddy:${CADDY_VERSION}-builder AS builder
 
 RUN xcaddy build \
-  --with github.com/caddy-dns/cloudflare
+  --with github.com/caddy-dns/cloudflare \
+  --with github.com/caddyserver/replace-response
 
 ARG CADDY_VERSION="0.0.0"
 FROM caddy:${CADDY_VERSION}

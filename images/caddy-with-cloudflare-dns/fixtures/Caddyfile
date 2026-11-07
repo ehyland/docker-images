@@ -4,5 +4,6 @@
 
 # Local-only http
 :8080 {
+	replace "Hello from test fixture!" "Hello from replace-response!"
 	respond "Hello from test fixture!"
 }
